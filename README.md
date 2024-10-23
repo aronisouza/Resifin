@@ -1,8 +1,12 @@
 ## Video do Sistema
-https://youtu.be/In7MEr-7QT4
+<p align="center">
+  <a href="https://youtu.be/In7MEr-7QT4"><img width="700" src="https://github.com/aronisouza/Resifin/blob/main/Resifin.jpg"></a>
+</p>
 
 ## Video de outro Sistema usando o MVC
-https://youtu.be/pM-cnAE_VT0
+<p align="center">
+  <a href="https://youtu.be/pM-cnAE_VT0"><img width="700" src="https://github.com/aronisouza/Resifin/blob/main/Consultorio.jpg"></a>
+</p>
 
 ## Class Read
 Executa uma leitura simplificada com Prepared Statments.<br>
