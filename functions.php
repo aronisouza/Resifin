@@ -8,14 +8,7 @@ define('MP', '15;20;5');
 define('DIN', '01;01;1');
 
 
-// Apenas para verificar alguns arrays
-function getPreA(array $string)
-{
-  echo '<pre>';
-  print_r($string);
-  echo '</pre>';
-}
-
+// Apenas para verificar alguns arrays e textos
 function getPre($string)
 {
   echo '<pre>';
