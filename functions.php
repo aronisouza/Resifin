@@ -30,19 +30,18 @@ function getPre($string)
 */
 function getCrip($c, $t)
 {
-  $r='';
-  if($t == 0)
-  {
-    $f = "Filid";
-    $r = base64_encode($f.'/'.$c);
-  }
-  else
-  {
-    $ts = base64_decode($c);
-    $url = explode('/', $ts);
-    $r = $url[1];
-  }
-  return $r;
+  $key = 'FiliD_Danela-Gatins';
+  $iv = '2609105565050936';
+  $method = 'AES-256-CBC';
+  if ($t == 0) {
+      $encrypted = openssl_encrypt($c, $method, $key, 0, $iv);
+      $safeEncrypted = strtr(base64_encode($encrypted), '+/', '-_');
+      return $safeEncrypted;
+  } elseif ($t == 1) {
+      $decoded = base64_decode(strtr($c, '-_', '+/'));
+      $decrypted = openssl_decrypt($decoded, $method, $key, 0, $iv);
+      return $decrypted;
+  } 
 }
 
 /**
