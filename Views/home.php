@@ -1,16 +1,16 @@
-<?php 
+<?php
 
   $valoresPermitidos = ['Pagamento', 'Vale', 'Aluguel', 'Terapia', 'Outras Entradas'];
-  $DimCaixa=$this->dados1[0]['Valores Entrada'] != ""?$this->dados1[0]['Valores Entrada']:0.00;
-  $Pendente=$this->dados2[0]['Valores Pendentes'] != ""?$this->dados2[0]['Valores Pendentes']:0.00;
-  $Pago=$this->dados3[0]['Valores Pagos'] != ""?$this->dados3[0]['Valores Pagos']:0.00;
+  $DimCaixa=$this->dados[1][0]['Valores Entrada'] != ""?$this->dados[1][0]['Valores Entrada']:0.00;
+  $Pendente=$this->dados[2][0]['Valores Pendentes'] != ""?$this->dados[2][0]['Valores Pendentes']:0.00;
+  $Pago=$this->dados[3][0]['Valores Pagos'] != ""?$this->dados[3][0]['Valores Pagos']:0.00;
 
 ?>
 <div class="container-md mt-3">
 
   <div class="row">
     <h4>Movimentações financeiras</h4>
-    <p>Registros <?= $this->dados4['dado']; ?></p>
+    <p>Registros <?= $this->dados[4]['dado']; ?></p>
   </div>
 
   <div class="row-12 d-flex justify-content-between">
@@ -47,28 +47,28 @@
   </div>
 
   <?php
-    if($this->dados4['showPag'] == 1):
+    if($this->dados[4]['showPag'] == 1):
     ?>
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <?php
-          if(isset($this->dados5) && $this->dados5>0 && $this->dados4['showPag'] == 1):
+          if(isset($this->dados[5]) && $this->dados[5]>0 && $this->dados[4]['showPag'] == 1):
             ?>
-            <li class="page-item"><a class="page-link" href="<?= URL.'home/index/'.$this->dados5?>">&laquo;</a></li>
+            <li class="page-item"><a class="page-link" href="<?= URL.'home/index/'.$this->dados[5]?>">&laquo;</a></li>
             <?php
           endif;
 
-          for($i=1;$i <= $this->dados8;$i++):
+          for($i=1;$i <= $this->dados[8];$i++):
             ?>
               <li class="page-item">
-                <a class="page-link <?= $this->dados5+1 == $i? 'active':''?>" href="<?= URL.'home/index/'.$i?>"><?= $i?></a>
+                <a class="page-link <?= $this->dados[5]+1 == $i? 'active':''?>" href="<?= URL.'home/index/'.$i?>"><?= $i?></a>
               </li>
             <?php 
           endfor;
 
-          if($this->dados7 < $this->dados8 && $this->dados4['showPag'] == 1):
+          if($this->dados[7] < $this->dados[8] && $this->dados[4]['showPag'] == 1):
             ?>
-            <li class="page-item"><a class="page-link" href="<?= URL.'home/index/'.$this->dados6?>">&raquo;</a></li>
+            <li class="page-item"><a class="page-link" href="<?= URL.'home/index/'.$this->dados[6]?>">&raquo;</a></li>
             <?php 
           endif;
         ?>
@@ -83,7 +83,7 @@
       <h5>Entradas e Saidas</h5>
 
       <?php 
-        if(empty($this->dados0)) echo '<div class="shadow-sm p-3 mb-5 bg-body rounded mt-4">Nenhum dados retornado pelo sistema!</div>';
+        if(empty($this->dados[0])) echo '<div class="shadow-sm p-3 mb-5 bg-body rounded mt-4">Nenhum dados retornado pelo sistema!</div>';
         else
         {
       ?>
@@ -99,33 +99,7 @@
         </thead>
         <tbody>
           <?php
-            //  exibe as entras de dinheiro
-            
-            if($this->dados5 != 0 && is_array($this->dados5))
-            {
-              foreach($this->dados5 as $dadoe)
-              { ?>
-                  <tr class="table-success">
-                    <td style="text-align: center;">
-                      <a type="button" class="btn btn-link" href="/verdetalhes/index/<?php echo $dadoe['id'];?>">
-                        <?php getIco('aspect-ratio','text-dark',26); ?>
-                      </a>
-                    </td>
-                    <td>
-                      <?php
-                      echo in_array($dadoe['TipoEntrada'], $valoresPermitidos)? getIco('arrow-up-short','text-success', 26): getIco('arrow-down-short','text-danger', 26);
-                      echo $dadoe['Nome']; 
-                      ?>
-                    </td>
-                    <td><?php echo $dadoe['DataEntrada']; ?></td>
-                    <td style="text-align: center;">Não tem</td>
-                    <td style="text-align: center;">R$ <?= number_format($dadoe['Valor'], 2, ',', '.'); ?></td>
-                  </tr>
-                <?php 
-              }
-            }
-            //  exibe as contas para pagar
-            foreach($this->dados0 as $dado):
+          foreach($this->dados[0] as $dado):
           ?>
               <tr>
                 <td style="text-align: center;">

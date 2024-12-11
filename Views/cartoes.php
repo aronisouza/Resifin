@@ -2,18 +2,19 @@
 
 $Pago= 0.00;   $Pendente = 0.00;
 
-if(isset($this->dados1) && !empty($this->dados1))
+if(isset($this->dados[1]) && !empty($this->dados[1]))
 {
-  $Pago = $this->dados1['Valores Pagos'];
+  $Pago = $this->dados[1]['Valores Pagos'];
   $Pago = $Pago == ''?0.00:$Pago;
 }
 
-if(isset($this->dados2) && !empty($this->dados2))
+if(isset($this->dados[2]) && !empty($this->dados[2]))
 {
-  $Pendente = $this->dados2['Valores Pendentes'];
+  $Pendente = $this->dados[2]['Valores Pendentes'];
   $Pendente = $Pendente == ''?0.00:$Pendente;
 }
 
+//getPre($this->dados);
 ?>
 <div class="container mt-3">
   
@@ -119,8 +120,8 @@ if(isset($this->dados2) && !empty($this->dados2))
   <div class="row">
     <div class="alert alert-light shadow-sm p-3 bg-body rounded" role="alert">
       
-      <?php //getPre($this->dados0);
-      if(empty($this->dados0[0])):
+      <?php
+      if(empty($this->dados[0])):
         echo "
         <h5>
           Não existe movimentações para o Parâmetro selecionado.
@@ -131,13 +132,13 @@ if(isset($this->dados2) && !empty($this->dados2))
         <div class='row'>
         <div class='col-auto me-auto'>
           <h5>
-            Informações do <b> {$this->dados3['teste']} </b>
+            Informações do <b> {$this->dados[3]['teste']} </b>
           </h5>
           </div>
           <div class='col-auto'>
           <form method='post'>
-            <input type='hidden' name='DataPagamento' value='{$this->dados0[0]['DataPagamento']}'>
-            <input type='hidden' name='Cartao' value='{$this->dados0[0]['Cartao']}'>
+            <input type='hidden' name='DataPagamento' value='{$this->dados[0][0]['DataPagamento']}'>
+            <input type='hidden' name='Cartao' value='{$this->dados[0][0]['Cartao']}'>
             <button type='submit' class='btn btn-dark btn-sm' name='PagarTodasdoMesCartao'>Pagar todas as de uma vez</button>
           </form>
           </div>
@@ -157,7 +158,7 @@ if(isset($this->dados2) && !empty($this->dados2))
             </div>
             <?php
             //getPreA($this->dados0);
-            foreach($this->dados0 as $key => $cartao):
+            foreach($this->dados[0] as $key => $cartao):
               $_corLista = 'neutro';
               if($cartao['DataPagamento'] < date('Y-m-d') && $cartao['FaturaPaga']==0) $_corLista = 'aberto';
               if($cartao['FaturaPaga'] == 1) $_corLista = 'pago';

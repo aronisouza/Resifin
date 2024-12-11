@@ -36,7 +36,7 @@
     <div class="alert alert-light shadow-sm p-3 mb-5 bg-body rounded" role="alert">
       <h5>Entradas</h5>
       <?php 
-        if(empty($this->dados0)) echo '<div class="shadow-sm p-3 mb-5 bg-body rounded mt-4">Nenhum dados retornado pelo sistema!</div>';
+        if(empty($this->dados[0])) echo '<div class="shadow-sm p-3 mb-5 bg-body rounded mt-4">Nenhum dados retornado pelo sistema!</div>';
         else
         {
       ?>
@@ -52,9 +52,9 @@
         </thead>
         <tbody>
           <?php
-            if($this->dados0 != 0 && is_array($this->dados0))
+            if($this->dados[0] != 0 && is_array($this->dados[0]))
             {
-              foreach($this->dados0 as $dadoe)
+              foreach($this->dados[0] as $dadoe)
               { ?>
                   <tr class="table">
                     <td style="text-align: center;">

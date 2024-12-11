@@ -2,14 +2,9 @@
 if(isset($_POST['SalvaOp']))
 {
   $dados = [ $_POST['Coluna']=> $_POST['DataOpcoes']];
-
-  getPreA($dados);
-
-  
   $up = new Update;
   $up->ExeUpdate('ferramenta',$dados,"WHERE id=:id","id=1");
   if($up->getRowCount()) getMessage('success','Foi alterado!'); 
-  
 }
 ?>
 <!DOCTYPE html>
@@ -50,7 +45,7 @@ if(isset($_POST['SalvaOp']))
 
   <div class="container">
     <?php
-      $this->carregarView($view, $dadosZero);
+      $this->carregarView($view, $dados);
     ?>
   </div>
 

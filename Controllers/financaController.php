@@ -44,8 +44,6 @@ class financaController extends Controller
         'ValorParcela'        => str_replace(',', '.', filter_input(INPUT_POST, 'ValorParcela', FILTER_DEFAULT)),
       ];
       
-      //getPreA($dados);
-      
       if($_POST['MetodoPagamento'] == 'Dinheiro')
       {
         $dados['DataPrimeiraParcela'] = filter_input(INPUT_POST, 'DataEntrada', FILTER_DEFAULT);
@@ -54,19 +52,15 @@ class financaController extends Controller
       {
         $_DataEntrada = explode('-', $dados['DataEntrada']);
         $m = $_DataEntrada[1]+($dados['QuantidadeParcelas']);
-
         if($m>12 && $_DataEntrada[1]==12) $dados['DataPrimeiraParcela'] = $_DataEntrada[0]+1 .'-01-'.$dt[1];
-
         else 
         {
-          //* adicionado >= antes erá >
           $fff = $_DataEntrada[2] >= $dt[0]?$_DataEntrada[1]+1:$_DataEntrada[1];
           $dados['DataPrimeiraParcela'] = $_DataEntrada[0] .'-'.$fff.'-'.$dt[1];
         }
       }
       $cr = new Create;
       $cr->ExeCreate('entradas', $dados);
-
       if( isset($cr->getResult()[0]) && $dados['QuantidadeParcelas'] >=0 )
       {
         $IdContasPagar = $cr->getResult();
@@ -117,11 +111,7 @@ class financaController extends Controller
 
       $cr = new Create;
       $cr->ExeCreate('entradas', $dados);
-
-      if($cr->getResult()[0]!="")
-      {
-        getMessage('success', 'Cadastrado com sucesso.');
-      }
+      if($cr->getResult()[0]!="") getMessage('success', 'Cadastrado com sucesso.');
       else getMessage('danger', 'Algo deu errado na hora de cadastar.');
     }
 

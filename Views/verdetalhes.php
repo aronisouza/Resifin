@@ -1,7 +1,5 @@
 <?php
 
-  //getPreA($this->dados0);
-  //getPreA($this->dados1);
   $valoresPermitidos = ['Pagamento', 'Vale', 'Aluguel', 'Terapia', 'Outras Entradas'];
 ?>
 <div class="container-md mt-5">
@@ -13,12 +11,12 @@
       <div class="row">
 
         <ul class="list-group">
-          <li class="list-group-item active"><?= in_array($this->dados0['TipoEntrada'], $valoresPermitidos)?'Entrada de Dinheiro':'Pagamento de Conta';?></li>
-          <li class="list-group-item"><?= $this->dados0['Nome']?></li>
+          <li class="list-group-item active"><?= in_array($this->dados[0]['TipoEntrada'], $valoresPermitidos)?'Entrada de Dinheiro':'Pagamento de Conta';?></li>
+          <li class="list-group-item"><?= $this->dados[0]['Nome']?></li>
         </ul>
 
         <?php 
-          if($this->dados0['Status'] !='Dinheiro em Caixa'):
+          if($this->dados[0]['Status'] !='Dinheiro em Caixa'):
         ?>
         <ul class="list-group my-3">
           <li class="list-group-item bg-secondary">Valores e parcelas a serem pagas</li>
@@ -38,7 +36,7 @@
           </li>
 
           <?php // CASO TENHA PARCELAMENTOS
-            foreach($this->dados1 as $dado):
+            foreach($this->dados[1] as $dado):
               $_corLista = 'list-group-item-light';
               if($dado['DataPagamento'] < date('Y-m-d') && $dado['FaturaPaga']==0) $_corLista = 'list-group-item-danger';
               if($dado['FaturaPaga'] == 1) $_corLista = 'list-group-item-success';
@@ -50,7 +48,7 @@
                   <?= $dado['DataPagamento']; ?>
                 </div>
                 <div class="col-4">
-                <?= $dado['ParcelaAtual'] .'/'.$this->dados0['QuantidadeParcelas'] ?>
+                <?= $dado['ParcelaAtual'] .'/'.$this->dados[0]['QuantidadeParcelas'] ?>
                 </div>
                 <div class="col-2">
                   R$ <?= number_format($dado['Valor'], 3, ',', '.') ?>
@@ -82,20 +80,20 @@
         <div class="card bg-light bg-gradient">
           <div class="card-body">
             <h5 class="card-title">Valor TOTAL</h5>
-            <p class="card-text text-center fs-3">R$ <?= number_format($this->dados0['Valor'], 3, ',', '.');?></p>
+            <p class="card-text text-center fs-3">R$ <?= number_format($this->dados[0]['Valor'], 3, ',', '.');?></p>
             
             <h5 class="card-subtitle mb-2 text-muted">Descrição</h5>
-            <p class="card-text p-2"><?= $this->dados0['Descricao']?></p>
-            <?php if($this->dados0['CartaoCigla'] !=''): ?>
+            <p class="card-text p-2"><?= $this->dados[0]['Descricao']?></p>
+            <?php if($this->dados[0]['CartaoCigla'] !=''): ?>
               <h5 class="card-subtitle text-muted">Cartão</h5>
-              <p class="card-text p-1"><?= '[ '.$this->dados0['CartaoCigla'].' ] '.$this->dados0['MetodoPagamento']?></p>
+              <p class="card-text p-1"><?= '[ '.$this->dados[0]['CartaoCigla'].' ] '.$this->dados[0]['MetodoPagamento']?></p>
             <?php endif; ?>
             <p><h5 class="card-subtitle text-muted">Tipo de Entrada</h5></p>
-            <p class="card-text p-1"><?= $this->dados0['TipoEntrada']?></p>
+            <p class="card-text p-1"><?= $this->dados[0]['TipoEntrada']?></p>
             <h5 class="card-subtitle text-muted">Status</h5>
-            <p class="card-text p-1"><?= $this->dados0['Status']?></p>
+            <p class="card-text p-1"><?= $this->dados[0]['Status']?></p>
             <h5 class="card-subtitle text-muted">Data da Compra</h5>
-            <p class="card-text p-1"><?= $this->dados0['DataEntrada']?></p>
+            <p class="card-text p-1"><?= $this->dados[0]['DataEntrada']?></p>
           </div>
         </div>
  

@@ -1,60 +1,50 @@
 <?php
-
 class Controller
 {
-  public $dados0;
-  public $dados1;
-  public $dados2;
-  public $dados3;
-  public $dados4;
-  public $dados5;
-  public $dados6;
-  public $dados7;
-  public $dados8;
-  public $dados9;
+  public $dados;
 
   public function __construct()
   {
-    $this->dados0 = array();
-    $this->dados1 = array();
-    $this->dados2 = array();
-    $this->dados3 = array();
-    $this->dados4 = array();
-    $this->dados5 = array();
-    $this->dados6 = array();
-    $this->dados7 = array();
-    $this->dados8 = array();
-    $this->dados9 = array();
+    $this->dados = array_fill(0, 10, array());
   }
 
   public function carregarComponents($component)
   {
-    require 'Components/' . $component . '.php';
+    $component = preg_replace('/[^a-zA-Z0-9_]/', '', $component);
+    $file = 'Components/' . $component . '.php';
+    if (file_exists($file))
+      require $file;
+    else 
+      throw new Exception("Erro: Arquivo {$file} não encontrado.");
   }
   
   public function carregarView($view, $dadosZero = array())
   {
-    extract($dadosZero);
-    require 'Views/' . $view . '.php';
+    $file = 'Views/' . $view . '.php';
+    if (file_exists($file))
+    {
+      extract($dadosZero);
+      require $file;
+    }
+    else throw new Exception("Erro: Arquivo {$file} não encontrado.");
   }
 
-  public function carregarTemplate($view, 
-  $dadosZero = array(), $dadosUm = array(), $dadosDois = array(), $dadosTreis = array(), $dadosQuatro = array(),
-  $dadosCinco = array(), $dadosSeis = array(), $dadosSete = array(), $dadosOito = array(), $dadosNove = array()
-  
-  )
+  public function carregarTemplate($view, ...$dados)
   {
-    $this->dados0 = $dadosZero;
-    $this->dados1 = $dadosUm;
-    $this->dados2 = $dadosDois;
-    $this->dados3 = $dadosTreis;
-    $this->dados4 = $dadosQuatro;
-    $this->dados5 = $dadosCinco;
-    $this->dados6 = $dadosSeis;
-    $this->dados7 = $dadosSete;
-    $this->dados8 = $dadosOito;
-    $this->dados9 = $dadosNove;
-    require 'Views/template.php';
+    // Verifique se a variável view foi passada corretamente
+    if (!empty($view)) {
+      // Carregar os dados
+      foreach ($dados as $index => $data)
+        $this->dados[$index] = $data;
+      
+      // Remove arrays vazios
+      $this->dados = array_filter($this->dados);
+
+      // Verifique se o arquivo template existe
+      if (file_exists('Views/template.php')) require 'Views/template.php';
+      else echo "Erro: O arquivo de template não foi encontrado.";
+    }
+    else echo "Erro: O parâmetro 'view' está vazio.";
   }
 
 }

@@ -32,7 +32,5 @@ class verdetalhesController extends Controller
     $lerParcelas = new Read;
     $lerParcelas->FullRead("SELECT * FROM parcelas WHERE IdContasPagar={$id}");
     $this->carregarTemplate("verdetalhes", $lerEntradas->getResult()[0], $lerParcelas->getResult());
-   
   }
-
 }

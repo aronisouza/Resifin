@@ -4,12 +4,6 @@ class dinheiroentradasController extends Controller
 {
   public function index()
   {
-    $mes = date('M');
-    
-    if(isset($_POST["mesdimentrada"])) $mes = $_POST["mesdimentrada"];
-    echo $mes;
-
-
     $entradas = new Read;
     $entradas->FullRead("SELECT *
       FROM entradas

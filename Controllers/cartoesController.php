@@ -76,60 +76,44 @@ class cartoesController extends Controller
         case 'DIN':   $cartao='Dinheiro';break;
         case 'Aroni':   $cartao='Todos os Cartões';break;
       }
-    /*
-      $meses = ['Jan' => '01','Fev' => '02','Mar' => '03','Abr' => '04','Mai' => '05','Jun' => '06','Jul' => '07','Ago' => '08','Set' => '09','Out' => '10','Nov' => '11','Dez' => '12'];
-      $_ano = isset($_POST['anopesquisa']) && $_POST['anopesquisa'] != ""?$_POST['anopesquisa'] : date('Y');
+
+
+      $meses = [
+      'Jan' => '01', 'Fev' => '02', 'Mar' => '03', 'Abr' => '04', 
+      'Mai' => '05', 'Jun' => '06', 'Jul' => '07', 'Ago' => '08', 
+      'Set' => '09', 'Out' => '10', 'Nov' => '11', 'Dez' => '12'
+      ];
+
+      $_ano = isset($_POST['anopesquisa']) && $_POST['anopesquisa'] != "" ? $_POST['anopesquisa'] : date('Y');
       $_mes = $meses[$_POST['data']];
       $_mes = str_pad($_mes, 2, '0', STR_PAD_LEFT);
-      $xmes= isset($_POST['xmes']) && $_POST['xmes'] == 'xmes' ?'':"AND p.Cartao='$cartao'";
+      $xmes = isset($_POST['xmes']) && $_POST['xmes'] == 'xmes' ? '' : "AND p.Cartao='$cartao'";
       $cartao0 = new Read;
-      $FF="SELECT p.*, e.Nome, e.CartaoCigla, e.TipoEntrada, e.DataEntrada, e.Status, e.Parcelado 
-      FROM parcelas p 
-      LEFT JOIN entradas e 
-      ON p.IdContasPagar=e.id 
-      WHERE YEAR(DataPagamento)=$_ano AND MONTH(DataPagamento)=$_mes $xmes
-      ORDER BY p.DataPagamento ASC";
-    */
-
-    $meses = [
-    'Jan' => '01', 'Fev' => '02', 'Mar' => '03', 'Abr' => '04', 
-    'Mai' => '05', 'Jun' => '06', 'Jul' => '07', 'Ago' => '08', 
-    'Set' => '09', 'Out' => '10', 'Nov' => '11', 'Dez' => '12'
-    ];
-
-    $_ano = isset($_POST['anopesquisa']) && $_POST['anopesquisa'] != "" ? $_POST['anopesquisa'] : date('Y');
-    $_mes = $meses[$_POST['data']];
-    $_mes = str_pad($_mes, 2, '0', STR_PAD_LEFT);
-    $xmes = isset($_POST['xmes']) && $_POST['xmes'] == 'xmes' ? '' : "AND p.Cartao='$cartao'";
-    $cartao0 = new Read;
     
-    $FF = "
-    SELECT p.*, e.Nome, e.CartaoCigla, e.TipoEntrada, e.DataEntrada, e.Status, e.Parcelado, e.id as EntradaID 
-    FROM parcelas p 
-    LEFT JOIN entradas e ON p.IdContasPagar=e.id 
-    WHERE YEAR(p.DataPagamento)=$_ano 
-    AND MONTH(p.DataPagamento)=$_mes 
-    $xmes 
-    ORDER BY p.DataPagamento ASC";
+      $FF = "
+      SELECT p.*, e.Nome, e.CartaoCigla, e.TipoEntrada, e.DataEntrada, e.Status, e.Parcelado, e.id as EntradaID 
+      FROM parcelas p 
+      LEFT JOIN entradas e ON p.IdContasPagar=e.id 
+      WHERE YEAR(p.DataPagamento)=$_ano 
+      AND MONTH(p.DataPagamento)=$_mes 
+      $xmes 
+      ORDER BY p.DataPagamento ASC";
 
 
-    $cartao0->FullRead($FF);
-    $lambi='';
-    foreach ($cartao0->getResult() as $linha) {
-      $lambi = $lambi.','.$linha['EntradaID'];
-    }
-    $_SESSION['EntradaID'] = $lambi;
-
-       //$cartao0->FullRead($FF);
+      $cartao0->FullRead($FF);
+      $lambi='';
+      foreach ($cartao0->getResult() as $linha) {
+        $lambi = $lambi.','.$linha['EntradaID'];
+      }
+      $_SESSION['EntradaID'] = $lambi;
       if(!empty($cartao0->getResult())):
-          $this->carregarTemplate(
-          'cartoes',
-          $cartao0->getResult(),
-          $this->getSomaDividasPagas($_ano, $_mes, $cartao)[0],
-          $this->getSomaDividasAbertas($_ano, $_mes, $cartao)[0],
-          ['teste'=>$cartao]
-        );
-
+        $this->carregarTemplate(
+        'cartoes',
+        $cartao0->getResult(),
+        $this->getSomaDividasPagas($_ano, $_mes, $cartao)[0],
+        $this->getSomaDividasAbertas($_ano, $_mes, $cartao)[0],
+        ['teste'=>$cartao]
+      );
       else:
         $this->carregarTemplate('cartoes',  $cartao0->getResult());
       endif;

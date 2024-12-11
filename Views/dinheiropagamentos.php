@@ -25,9 +25,9 @@
         </thead>
         <tbody>
           <?php
-            if($this->dados0 != 0 && is_array($this->dados0))
+            if($this->dados[0] != 0 && is_array($this->dados[0]))
             {
-              foreach($this->dados0 as $dadoe)
+              foreach($this->dados[0] as $dadoe)
               { ?>
                   <tr class="table">
                     <td style="text-align: center;">
